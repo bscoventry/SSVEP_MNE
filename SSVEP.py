@@ -130,21 +130,22 @@ def welchSpectro(timeSeries,fs=500,pltflag=1):
 #--------------------------------------------------------------------------------------------------------------------------
 #Let's split data here!
 #--------------------------------------------------------------------------------------------------------------------------
-baseline1,stimulus1 = splitBaselinesStimuli(epochs,electrodeNum=1,vidNum=2)
-baseline2,stimulus2 = splitBaselinesStimuli(epochs,electrodeNum=1,vidNum=3)
+baseline1,stimulus1 = splitBaselinesStimuli(epochs,electrodeNum=1,vidNum=0)
+baseline2,stimulus2 = splitBaselinesStimuli(epochs,electrodeNum=1,vidNum=1)
 f1,pxx1 = welchSpectro(baseline1,fs=500,pltflag=0)
 f2,pxx2 = welchSpectro(baseline2,fs=500,pltflag=0)
 f3,pxx3 = welchSpectro(stimulus1,fs=500,pltflag=0)
 f4,pxx4 = welchSpectro(stimulus2,fs=500,pltflag=0)
 fig, axs = plt.subplots(2, 2, figsize=(10, 6), layout='constrained')
+#info = mne.io.read_info(sample_data_raw_file)
 axs[0,0].plot(f1,pxx1)
-axs[0,0].set_title("Frequency-Baseline Video H1 electorde 1")
+axs[0,0].set_title("Frequency-Baseline Video H1 electorde 14 (01)")
 axs[0,1].plot(f3,pxx3)
 axs[0,1].set_title("Frequency-Baseline Video H3")
 axs[1,0].plot(f2,pxx2)
-axs[1,0].set_title("Frequency-Stimulus Video H1 (Whoa, thats a nice 6Hz event")
+axs[1,0].set_title("Frequency-Stimulus Video H1 (Whoa, thats a nice 12Hz event")
 axs[1,1].plot(f4,pxx4)
-axs[1,0].set_title("Frequency-Stimulus Video H3 (Whoa, thats a nice but less nice 6Hz event")
+axs[1,0].set_title("Frequency-Stimulus Video H3")
 plt.show()
 def snr_spectrum(psd, noise_n_neighbor_freqs=1, noise_skip_neighbor_freqs=1):
     """Compute SNR spectrum from PSD spectrum using convolution.
@@ -196,7 +197,10 @@ def snr_spectrum(psd, noise_n_neighbor_freqs=1, noise_skip_neighbor_freqs=1):
 
 #call function to compute SNR spectrum
 snrs = snr_spectrum(psds, noise_n_neighbor_freqs=3, noise_skip_neighbor_freqs=1)
-
+snrs1 = snr_spectrum(pxx1, noise_n_neighbor_freqs=3, noise_skip_neighbor_freqs=1)
+snrs2 = snr_spectrum(pxx2, noise_n_neighbor_freqs=3, noise_skip_neighbor_freqs=1)
+snrs3 = snr_spectrum(pxx3, noise_n_neighbor_freqs=3, noise_skip_neighbor_freqs=1)
+snrs4 = snr_spectrum(pxx4, noise_n_neighbor_freqs=3, noise_skip_neighbor_freqs=1)
 #print(snrs[0].shape)
 
 
